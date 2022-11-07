@@ -4,6 +4,7 @@ use std::fs::{copy, create_dir_all, remove_dir_all, File};
 use std::io::{BufRead, BufReader, Lines, Result as IOResult};
 use std::path::Path;
 
+const ENV_CARGO_REGENERATE: &str = "CARGO_REGENERATE";
 const PATH_PROTOS_DESTINATION_BASE: &str = "tensorflow";
 const PATH_PROTOS_SOURCE_BASE: &str = "submodule-tensorflow";
 const PATH_PROTOS_CONFIG: &str = "tensorflow/core/protobuf/config.proto";
@@ -83,7 +84,7 @@ fn regenerate_copy_protos() {
 }
 
 fn try_regenerate_protos() {
-    let regenerate = if let Ok(cargo_regenerate) = var("CARGO_REGENERATE") {
+    let regenerate = if let Ok(cargo_regenerate) = var(ENV_CARGO_REGENERATE) {
         matches!(
             cargo_regenerate.to_lowercase().as_str(),
             "1" | "true" | "yes"
