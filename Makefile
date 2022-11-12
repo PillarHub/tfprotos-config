@@ -1,6 +1,9 @@
 MAKEFLAGS		+= --silent
 
-all: | release
+all: | inspect-protos fmt generated-line-count
+
+inspect-protos:
+	echo "\nregenerated protos:" && tree src/protos
 
 test:
 	cargo test
@@ -23,6 +26,8 @@ debug:
 release:
 	cargo build --release
 
-regenerate:
-	CARGO_REGENERATE=1 cargo build
-	echo "\nregenerated protos:" && tree tensorflow
+generated-line-count:
+	echo "\nGenerated lines:" && wc -l src/tensorflow.rs
+
+msrv: | debug
+	cargo msrv
