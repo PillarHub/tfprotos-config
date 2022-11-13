@@ -31,3 +31,6 @@ generated-line-count:
 
 msrv: | debug
 	cargo msrv
+
+example-virtualgpu: all
+	cargo run --example virtualgpu
